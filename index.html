@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Food Calorie Estimator</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🍽️ Food Calorie Estimator</h1>
+    <p class="subtitle">Select food items and quantity to estimate calories &amp; nutrition</p>
+
+    <div class="goal-card">
+      <label for="goal-input">🎯 Daily Calorie Goal</label>
+      <div class="goal-row">
+        <input type="number" id="goal-input" placeholder="e.g. 2000" min="1">
+        <button id="save-goal-btn" class="btn secondary">Save Goal</button>
+      </div>
+      <p id="goal-status" class="goal-status"></p>
+    </div>
+
+    <div id="item-rows"></div>
+
+    <button id="add-row-btn" class="btn secondary">+ Add Food Item</button>
+    <button id="calculate-btn" class="btn primary">Calculate Calories</button>
+
+    <div id="results" class="results hidden">
+      <h2>Breakdown</h2>
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Qty (g)</th>
+            <th>Calories</th>
+            <th>Protein (g)</th>
+            <th>Carbs (g)</th>
+            <th>Fat (g)</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+
+      <div class="total-card">
+        <h3>Total for Meal</h3>
+        <div class="total-grid">
+          <div><span id="total-calories">0</span><small>Calories</small></div>
+          <div><span id="total-protein">0</span><small>Protein (g)</small></div>
+          <div><span id="total-carbs">0</span><small>Carbs (g)</small></div>
+          <div><span id="total-fat">0</span><small>Fat (g)</small></div>
+        </div>
+      </div>
+
+      <div id="goal-progress-card" class="goal-progress-card hidden">
+        <h3>Progress Towards Daily Goal</h3>
+        <div class="progress-bar-outer">
+          <div id="progress-bar-inner" class="progress-bar-inner"></div>
+        </div>
+        <p id="progress-text" class="progress-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <template id="row-template">
+    <div class="item-row">
+      <select class="food-select"></select>
+      <input type="number" class="qty-input" placeholder="Quantity (g)" min="1" value="100">
+      <button class="btn remove-btn">✕</button>
+    </div>
+  </template>
+
+  <script>
+    const FOODS = {{ foods | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
